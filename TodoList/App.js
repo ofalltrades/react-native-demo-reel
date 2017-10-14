@@ -10,7 +10,8 @@ import {
   FlatList,
   AsyncStorage,
   TextInput,
-  Keyboard
+  Keyboard,
+  Button
 } from 'react-native';
 
 import Task from './js/Task'
@@ -44,9 +45,17 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={ styles.container }>
-          <FlatList
-            data={ this.state.tasks }
-            renderItem={ ({ item, index }) => this.renderTask(item, index) } />
+        <FlatList
+          data={ this.state.tasks }
+          renderItem={ ({ item, index }) => this.renderTask(item, index) } />
+
+        <View style={ styles.addButton }>
+          <Text
+            style={ styles.addButtonText }
+            onPress={ () => null }>
+            +
+          </Text>
+        </View>
       </View>
     );
   }
@@ -58,5 +67,21 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingLeft: 10,
     paddingRight: 10
+  },
+
+  addButton: {
+    flexDirection: 'row',
+    backgroundColor: 'steelblue',
+    justifyContent: 'center'
+  },
+
+  addButtonText: {
+    color: 'green',
+    backgroundColor: 'yellow',
+    fontSize: 50,
+    padding: 15,
+    paddingTop: 0,
+    paddingBottom: 0,
+    marginBottom: 20
   }
 });
