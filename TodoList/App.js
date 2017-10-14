@@ -21,11 +21,16 @@ export default class App extends React.Component {
   constructor() {
     super();
 
+    this.addTask = this.addTask.bind(this);
     this.removeTask = this.removeTask.bind(this);
 
     this.state = {
       tasks: [{ key: 'now' }, { key: 'it' }, { key: 'works' }]
     };
+  }
+
+  addTask(task) {
+    this.setState({ tasks: this.state.tasks.concat([task]) });
   }
 
   removeTask(index) {
