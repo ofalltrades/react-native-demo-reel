@@ -22,8 +22,9 @@
   },
   "dependencies": {
     "expo": "^21.0.0",
-    "gl-react": "next",
-    "gl-react-native": "next",
+    "gl-react": "^3.13.0",
+    "gl-react-expo": "^3.6.0",
+    "gl-react-native": "^3.13.0",
     "react": "16.0.0-alpha.12",
     "react-native": "^0.48.4",
     "react-native-webgl": "^0.6.0"
