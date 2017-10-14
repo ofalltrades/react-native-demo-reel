@@ -21,19 +21,27 @@ export default class App extends React.Component {
   constructor() {
     super();
 
+    this.removeTask = this.removeTask.bind(this);
+
     this.state = {
-      tasks: []
+      tasks: [{ key: 'now' }, { key: 'it' }, { key: 'works' }]
     };
+  }
+
+  removeTask(index) {
+    this.setState({ tasks: this.state.tasks.filter((_, i) => index != i) });
+  }
+
+  renderTask(item, index) {
+    return <Task text={ item.key } id={ index } removeTaskCB={ this.removeTask } />;
   }
 
   render() {
     return (
       <View style={ styles.container }>
-        <View style={ styles.list }>
           <FlatList
-            data={[{ key: 'dsa' }, { key: 'bar' }]}
-            renderItem={ ({ item }) => <Task text={ item.key } /> } />
-        </View>
+            data={ this.state.tasks }
+            renderItem={ ({ item, index }) => this.renderTask(item, index) } />
       </View>
     );
   }
@@ -45,8 +53,5 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingLeft: 10,
     paddingRight: 10
-  },
-
-  list: {
   }
 });

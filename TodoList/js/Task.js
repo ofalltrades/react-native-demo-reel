@@ -22,7 +22,7 @@ export default class Task extends React.Component {
           { this.props.text }
         </Text>
 
-        <Button title={ '\u2717' } onPress={ () => null } />
+        <Button title={ '\u2717' } onPress={ () => this.props.removeTaskCB(this.props.id) } />
       </View>
     );
   }
