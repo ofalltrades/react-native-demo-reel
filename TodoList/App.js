@@ -27,9 +27,9 @@ export default class App extends React.Component {
 
     this.state = {
       tasks: [
-        { key: 'now', new: false },
-        { key: 'it', new: false },
-        { key: 'works', new: false }
+        { key: 'feed the fish', new: false },
+        { key: 'ask girlfriend if she has lost weight', new: false },
+        { key: 'point out that she looked great before as well', new: false }
       ]
     };
   }
@@ -65,6 +65,8 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={ styles.container }>
+        <Text style={ styles.header }>todo tasks:{ '\n' }---</Text>
+
         <FlatList
           data={ this.state.tasks }
           renderItem={ ({ item, index }) => this.renderTask(item, index) } />
@@ -95,11 +97,17 @@ const styles = StyleSheet.create({
   },
 
   addButtonText: {
-    color: 'green',
     fontSize: 75,
     padding: 15,
     paddingTop: 0,
     paddingBottom: 0,
     marginBottom: 20
+  },
+
+  header: {
+    fontSize: 25,
+    fontFamily: 'Courier',
+    paddingBottom: 8,
+    paddingTop: 20
   }
 });

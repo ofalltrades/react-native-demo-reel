@@ -30,12 +30,15 @@ export default class Task extends React.Component {
       <View style={ styles.task }>
         <Text
           style={ styles.taskText }
+          numberOfLines={ 1 }
+          ellipsizeMode='tail'
           onLongPress={ () => this.editTask() }>
           { this.props.task.key }
         </Text>
 
         <Button
           title={ '\u2717' }
+          color='black'
           onPress={ () => this.props.removeTaskCB(this.props.id) } />
       </View>
     );
@@ -71,7 +74,8 @@ const styles = StyleSheet.create({
 
   taskText: {
     fontFamily: 'Courier',
-    fontSize: 20
+    fontSize: 20,
+    width: '90%'
   },
 
   input: {
