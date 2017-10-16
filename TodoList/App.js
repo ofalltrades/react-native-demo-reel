@@ -9,7 +9,6 @@ import {
   View,
   FlatList,
   AsyncStorage,
-  TextInput,
   Keyboard,
   Button
 } from 'react-native';
@@ -24,6 +23,7 @@ export default class App extends React.Component {
 
     this.addTask = this.addTask.bind(this);
     this.removeTask = this.removeTask.bind(this);
+    this.saveTask = this.saveTask.bind(this);
 
     this.state = {
       tasks: [{ key: 'now' }, { key: 'it' }, { key: 'works' }]
@@ -35,11 +35,23 @@ export default class App extends React.Component {
   }
 
   removeTask(index) {
-    this.setState({ tasks: this.state.tasks.filter((_, i) => index != i) });
+    this.setState({ tasks: this.state.tasks.filter((_, i) => index !== i) });
   }
 
-  renderTask(item, index) {
-    return <Task text={ item.key } id={ index } removeTaskCB={ this.removeTask } />;
+  saveTask(text, id) {
+    this.setState({ tasks: this.state.tasks.map(
+      (task, i) => i === id ? { key: text } : task
+    )});
+  }
+
+  renderTask(task, id) {
+    return (
+      <Task
+        text={ task.key }
+        id={ id }
+        removeTaskCB={ this.removeTask }
+        saveTaskCB={ this.saveTask } />
+    );
   }
 
   render() {
