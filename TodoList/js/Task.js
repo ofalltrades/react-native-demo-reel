@@ -16,15 +16,22 @@ export default class Task extends React.Component {
     super(props);
 
     this.state = {
-      text: "foowy"
+      task: { key: '', new: props.task.new }
     };
+  }
+
+  editTask() {
+    this.setState({ task: { key: this.props.task.key, new: true } });
+    this.props.saveTaskCB(this.state.task, this.props.id);
   }
 
   renderTask() {
     return (
       <View style={ styles.task }>
-        <Text style={ styles.taskText }>
-          { this.props.text }
+        <Text
+          style={ styles.taskText }
+          onLongPress={ () => this.editTask() }>
+          { this.props.task.key }
         </Text>
 
         <Button
@@ -39,16 +46,18 @@ export default class Task extends React.Component {
       <View>
         <TextInput
           selectTextOnFocus={ true }
+          autoFocus={ this.props.task.new }
           style={ styles.input }
-          onChangeText={ text => this.setState({ text }) }
-          onEndEditing={ () => this.props.saveTaskCB(this.state.text, this.props.id) }
-          value={ this.state.text } />
+          onChangeText={ text => this.setState({ task: { key: text, new: false } }) }
+          onEndEditing={ () => this.props.saveTaskCB(this.state.task, this.props.id) }
+          onBlur={ () => this.props.saveTaskCB({ key: this.props.task.key, new: false }, this.props.id) }
+          value={ this.state.task.key } />
       </View>
     );
   }
 
   render() {
-    return this.renderInput();
+    return this.props.task.new ? this.renderInput() : this.renderTask();
   }
 }
 
@@ -61,7 +70,8 @@ const styles = StyleSheet.create({
   },
 
   taskText: {
-    fontFamily: 'Courier'
+    fontFamily: 'Courier',
+    fontSize: 20
   },
 
   input: {

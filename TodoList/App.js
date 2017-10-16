@@ -26,7 +26,11 @@ export default class App extends React.Component {
     this.saveTask = this.saveTask.bind(this);
 
     this.state = {
-      tasks: [{ key: 'now' }, { key: 'it' }, { key: 'works' }]
+      tasks: [
+        { key: 'now', new: false },
+        { key: 'it', new: false },
+        { key: 'works', new: false }
+      ]
     };
   }
 
@@ -34,20 +38,24 @@ export default class App extends React.Component {
     this.setState({ tasks: this.state.tasks.concat([task]) });
   }
 
-  removeTask(index) {
-    this.setState({ tasks: this.state.tasks.filter((_, i) => index !== i) });
+  removeTask(id) {
+    this.setState({ tasks: this.state.tasks.filter((_, i) => id !== i) });
   }
 
-  saveTask(text, id) {
-    this.setState({ tasks: this.state.tasks.map(
-      (task, i) => i === id ? { key: text } : task
-    )});
+  saveTask(newTask, id) {
+    if (newTask.key !== '') {
+      this.setState({ tasks: this.state.tasks.map(
+        (task, i) => i === id ? { key: newTask.key, new: newTask.new } : task
+      )});
+    } else {
+      this.removeTask(id);
+    }
   }
 
   renderTask(task, id) {
     return (
       <Task
-        text={ task.key }
+        task={ task }
         id={ id }
         removeTaskCB={ this.removeTask }
         saveTaskCB={ this.saveTask } />
@@ -64,7 +72,7 @@ export default class App extends React.Component {
         <View style={ styles.addButton }>
           <Text
             style={ styles.addButtonText }
-            onPress={ () => null }>
+            onPress={ () => this.addTask({ key: '', new: true }) }>
             +
           </Text>
         </View>
@@ -83,14 +91,12 @@ const styles = StyleSheet.create({
 
   addButton: {
     flexDirection: 'row',
-    backgroundColor: 'steelblue',
     justifyContent: 'center'
   },
 
   addButtonText: {
     color: 'green',
-    backgroundColor: 'yellow',
-    fontSize: 50,
+    fontSize: 75,
     padding: 15,
     paddingTop: 0,
     paddingBottom: 0,
